@@ -1,26 +1,373 @@
 @import "tailwindcss";
 
+@theme {
+  --font-serif: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-ibm-plex-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  --color-primary: #38bdf8;
+  --color-primary-hover: #0ea5e9;
+  --color-accent: #d4a373;
+  --color-accent-hover: #e3b888;
+  --color-accent-soft: rgba(212, 163, 115, 0.12);
+  
+  --color-canvas: #0a0e17;
+  --color-surface-subtle: #0f1523;
+  --color-surface-card: #131b2c;
+  --color-surface-hover: #182238;
+  
+  --color-line: rgba(255, 255, 255, 0.08);
+  --color-line-strong: rgba(255, 255, 255, 0.16);
+  --color-line-accent: rgba(212, 163, 115, 0.35);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0e17;
+  --foreground: #e2e8f0;
+  --accent: #d4a373;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-ibm-plex-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow-x: hidden;
+  letter-spacing: -0.01em;
 }
+
+/* Accessible visible focus states across all interactive elements */
+:focus-visible {
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
+}
+
+/* Skip to main content link for keyboard navigation */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.5rem 1rem;
+  background-color: #f59e0b;
+  color: #030712;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: 0.375rem;
+  transition: top 0.2s ease-out;
+}
+.skip-link:focus {
+  top: 1rem;
+}
+
+h1, h2, h3, .font-serif-heading {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-feature-settings: "liga" 1, "calt" 1;
+}
+
+/* Technical engineering grid with low-opacity dot & line accents */
+.bg-grid-subtle {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+}
+
+/* Subtle blueprint dot matrix for engineering section backgrounds */
+.bg-dots-subtle {
+  background-size: 24px 24px;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+}
+
+/* Precision section divider with centered technical node */
+.section-divider {
+  position: relative;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.08) 20%,
+    rgba(245, 158, 11, 0.25) 50%,
+    rgba(255, 255, 255, 0.08) 80%,
+    transparent
+  );
+}
+
+.section-divider::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 5px;
+  height: 5px;
+  background-color: #f59e0b;
+  border-radius: 9999px;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+}
+
+/* Minimalist technical coordinate label */
+.tech-label {
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(156, 163, 175, 0.6);
+  user-select: none;
+}
+
+
+/* Custom modern scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0e17;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d4a373;
+}
+
+/* ─── Hero Animations ──────────────────────────────────────────── */
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes heroPulseGlow {
+  0%, 100% { opacity: 0.35; }
+  50%       { opacity: 0.55; }
+}
+
+@keyframes heroFloatY {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
+}
+
+@keyframes heroScanLine {
+  0%   { transform: translateY(-100%); opacity: 0; }
+  10%  { opacity: 0.6; }
+  90%  { opacity: 0.6; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+@keyframes heroCursor {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes heroOrbitSlow {
+  from { transform: rotate(0deg) translateX(90px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(90px) rotate(-360deg); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Utility classes */
+.hero-fade-up {
+  opacity: 0;
+  animation: heroFadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.hero-fade-in {
+  opacity: 0;
+  animation: heroFadeIn 0.5s ease forwards;
+}
+
+/* When float and fade-in are combined on the same element,
+   list both animations so neither overwrites the other. */
+.hero-fade-in.hero-float {
+  animation: heroFadeIn 0.5s ease forwards, heroFloatY 5s 0.5s ease-in-out infinite;
+}
+
+.hero-float {
+  animation: heroFloatY 5s ease-in-out infinite;
+}
+
+.hero-cursor::after {
+  content: '|';
+  display: inline-block;
+  margin-left: 1px;
+  animation: heroCursor 1s step-end infinite;
+  color: #f59e0b;
+}
+
+.hero-shimmer-text {
+  background: linear-gradient(
+    90deg,
+    #e2e8f0 30%,
+    #f59e0b 50%,
+    #e2e8f0 70%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3.5s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-fade-up,
+  .hero-fade-in,
+  .hero-fade-in.hero-float,
+  .hero-float,
+  .hero-cursor::after {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ─── Standardized Motion System ─────────────────────────────────── */
+
+:root {
+  --ease-out-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 180ms;
+  --duration-normal: 300ms;
+  --duration-reveal: 450ms;
+}
+
+/* ─── Scroll-reveal primitives ───────────────────────────────────── */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity var(--duration-reveal) var(--ease-out-editorial),
+    transform var(--duration-reveal) var(--ease-out-editorial);
+  will-change: opacity, transform;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-20px);
+  transition:
+    opacity var(--duration-reveal) var(--ease-out-editorial),
+    transform var(--duration-reveal) var(--ease-out-editorial);
+  will-change: opacity, transform;
+}
+
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(20px);
+  transition:
+    opacity var(--duration-reveal) var(--ease-out-editorial),
+    transform var(--duration-reveal) var(--ease-out-editorial);
+  will-change: opacity, transform;
+}
+
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.97);
+  transition:
+    opacity var(--duration-reveal) var(--ease-out-editorial),
+    transform var(--duration-reveal) var(--ease-out-editorial);
+  will-change: opacity, transform;
+}
+
+.reveal-scale.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ─── Micro-interactions: Cards, Buttons, Images ────────────────── */
+
+/* Card hover with subtle elevation without layout shift */
+.hover-lift {
+  transition:
+    transform var(--duration-normal) var(--ease-out-editorial),
+    border-color var(--duration-normal) ease,
+    background-color var(--duration-normal) ease,
+    box-shadow var(--duration-normal) ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-3px);
+}
+
+/* Interactive link arrow nudging */
+.group:hover .arrow-slide {
+  transform: translateX(3px);
+}
+.arrow-slide {
+  transition: transform var(--duration-fast) var(--ease-out-editorial);
+}
+
+/* Timeline marker pulse */
+.timeline-dot {
+  transition:
+    transform var(--duration-normal) var(--ease-out-editorial),
+    background-color var(--duration-normal) ease,
+    box-shadow var(--duration-normal) ease;
+}
+.group:hover .timeline-dot {
+  transform: scale(1.25);
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+}
+
+/* Image zoom inside overflow container */
+.img-zoom {
+  transition: transform 0.5s var(--ease-out-editorial);
+}
+.group:hover .img-zoom {
+  transform: scale(1.03);
+}
+
+/* Accessible reduced-motion guarantees */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+  .reveal,
+  .reveal-left,
+  .reveal-right,
+  .reveal-scale,
+  .hover-lift,
+  .arrow-slide,
+  .timeline-dot,
+  .img-zoom {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+

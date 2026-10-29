@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Ankush Chopane — Portfolio
 
-## Getting Started
+A single-page portfolio built from your résumé content: hero, projects, technical experience & training, skills, certificates, achievements, education, and contact — all in plain HTML/CSS/JS, so it deploys instantly with no build step.
 
-First, run the development server:
+## Files
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+index.html    → all page content
+style.css     → design system (colors, type, layout)
+script.js     → mobile menu toggle
+assets/
+  Ankush_Chopane_Resume.pdf → downloadable résumé (linked from the nav and hero)
+vercel.json   → clean-URL config for Vercel
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Deploy to Vercel — easiest path (no coding tools needed)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Go to https://vercel.com and sign up / log in (you can use your GitHub or Google account).
+2. Click **Add New → Project**.
+3. Choose **"Deploy without Git"** / drag-and-drop option, and drag this whole folder onto the page.
+   - If you don't see that option, use the alternative path below (GitHub) — Vercel's UI changes occasionally.
+4. Click **Deploy**. In under a minute you'll get a live URL like `ankush-chopane.vercel.app`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deploy via GitHub (recommended — makes future edits easy)
 
-## Learn More
+1. Create a new repository on GitHub, e.g. `portfolio`.
+2. Upload all the files in this folder to that repo (via GitHub's "Add file → Upload files" in the browser, or `git push` if you're comfortable with Git).
+3. Go to https://vercel.com/new, choose **Import Git Repository**, and select your new repo.
+4. Framework preset: choose **Other** (it's a static site, no build command needed).
+5. Click **Deploy**.
+6. Every time you push a change to GitHub, Vercel redeploys automatically.
 
-To learn more about Next.js, take a look at the following resources:
+## Custom domain / project name
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+After deploying, go to your project → **Settings → Domains** to set a custom `.vercel.app` subdomain (e.g. `ankush-chopane.vercel.app`) or connect a real domain if you buy one later.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Editing content later
 
-## Deploy on Vercel
+- All text lives directly in `index.html` — search for the section you want to change (e.g. `id="work"` for projects).
+- Colors and fonts are defined once at the top of `style.css` under `:root { ... }` — change `--accent` or `--ink` there to re-theme the whole site.
+- To swap the résumé PDF, replace `assets/Ankush_Chopane_Resume.pdf` with a new file of the same name.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Notes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- The two fonts (Fraunces, IBM Plex Sans) load from Google Fonts via a `<link>` in `index.html` — this works fine once deployed; you just won't see them in offline/sandboxed previews.
+- The site is fully responsive (test by resizing your browser or opening on mobile) and uses no frameworks or build tools, so there's nothing to install to run it locally — just open `index.html` in a browser.
